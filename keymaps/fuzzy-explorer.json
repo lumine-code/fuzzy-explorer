@@ -1,6 +1,9 @@
 {
+  // `alt-e` reveals the explorer. Bare alt-<letter> is the tier for revealing a
+  // surface, one letter per surface; `alt-p` went to project-list, whose
+  // initial it is.
   "atom-workspace": {
-    "alt-p": "fuzzy-explorer:toggle"
+    "alt-e": "fuzzy-explorer:toggle"
   },
   ".fuzzy-explorer atom-text-editor[mini]": {
     "alt-enter": "fuzzy-explorer:open-external",
@@ -9,13 +12,14 @@
     "alt-right": "fuzzy-explorer:split-right",
     "alt-up": "fuzzy-explorer:split-up",
     "alt-down": "fuzzy-explorer:split-down",
-    "alt-v alt-a": "fuzzy-explorer:insert-absolute-path",
-    "alt-v": "fuzzy-explorer:insert-relative-path",
+    // `alt-v` and `alt-c` are chord prefixes only. Binding a prefix as a
+    // complete keystroke as well makes every press wait out the 1000 ms
+    // partial-match timeout before the default variant fires.
     "alt-v alt-r": "fuzzy-explorer:insert-relative-path",
+    "alt-v alt-a": "fuzzy-explorer:insert-absolute-path",
     "alt-v alt-n": "fuzzy-explorer:insert-file-name",
-    "alt-c alt-a": "fuzzy-explorer:copy-absolute-path",
-    "alt-c": "fuzzy-explorer:copy-relative-path",
     "alt-c alt-r": "fuzzy-explorer:copy-relative-path",
+    "alt-c alt-a": "fuzzy-explorer:copy-absolute-path",
     "alt-c alt-n": "fuzzy-explorer:copy-file-name",
     "alt-0": "fuzzy-explorer:use-default-separator",
     "alt-/": "fuzzy-explorer:use-forward-slashes",

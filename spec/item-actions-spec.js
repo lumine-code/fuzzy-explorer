@@ -24,8 +24,11 @@ describe("fuzzy-explorer item actions", () => {
     expect(openExternal.description).toBe("Open the file in the default external program");
     expect(openExternal.keystrokes).toEqual(["alt-enter"]);
 
+    // `alt-v` is a chord prefix and nothing else. Binding it as a complete
+    // keystroke too made every press sit out the 1000 ms partial-match timeout
+    // before the default variant fired.
     const insertRelative = byCommand.get("fuzzy-explorer:insert-relative-path");
-    expect([...insertRelative.keystrokes].sort()).toEqual(["alt-v", "alt-v alt-r"]);
+    expect([...insertRelative.keystrokes].sort()).toEqual(["alt-v alt-r"]);
 
     // Every action explains itself with more than a restated title.
     for (const action of actions) {
