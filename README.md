@@ -14,7 +14,7 @@ To install `fuzzy-explorer` search for _fuzzy-explorer_ in the Install pane of t
 
 ## Commands
 
-Commands available in `atom-workspace`:
+Commands available in `lumine-workspace`:
 
 - `fuzzy-explorer:toggle`: toggle the fuzzy explorer panel,
 - `fuzzy-explorer:refresh`: refresh the file cache,

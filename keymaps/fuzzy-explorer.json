@@ -2,10 +2,10 @@
   // `alt-e` reveals the explorer. Bare alt-<letter> is the tier for revealing a
   // surface, one letter per surface; `alt-p` went to project-list, whose
   // initial it is.
-  "atom-workspace": {
+  "lumine-workspace": {
     "alt-e": "fuzzy-explorer:toggle"
   },
-  ".fuzzy-explorer atom-text-editor[mini]": {
+  ".fuzzy-explorer lumine-text-editor[mini]": {
     "alt-enter": "fuzzy-explorer:open-external",
     "ctrl-enter": "fuzzy-explorer:show-in-folder",
     "alt-left": "fuzzy-explorer:split-left",

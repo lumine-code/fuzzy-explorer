@@ -36,7 +36,7 @@
     "format:check": "prettier --check ."
   },
   "activationCommands": {
-    "atom-workspace": [
+    "lumine-workspace": [
       "fuzzy-explorer:toggle",
       "fuzzy-explorer:refresh",
       "fuzzy-explorer:edit"
