@@ -37,8 +37,7 @@ Commands available in `.fuzzy-explorer`, all listed with their keybindings in th
 - `fuzzy-explorer:use-forward-slashes`: use forward slashes in inserted and copied paths,
 - `fuzzy-explorer:use-backslashes`: use backslashes in inserted and copied paths,
 - `fuzzy-explorer:query-selected-path`: continue the query from the selected path,
-- `fuzzy-explorer:query-selection`: use the editor selection as the query,
-- `fuzzy-explorer:claude-chat`: attach the file to the Claude chat.
+- `fuzzy-explorer:query-selection`: use the editor selection as the query.
 
 ## Configuration
 
@@ -51,7 +50,6 @@ Create a config file at the Lumine config path, `explorer.json`, with an array o
 ## Services
 
 - **open-external** (`^1.0.0`): consumed to open files with the configured external application.
-- **claude-chat** (`^1.0.0`): consumed to attach the selected file to a claude-chat session.
 
 ## Customization
 

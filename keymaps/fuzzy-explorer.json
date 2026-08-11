@@ -26,7 +26,6 @@
     "alt-\\": "fuzzy-explorer:use-backslashes",
     "alt-q": "fuzzy-explorer:query-selected-path",
     "alt-s": "fuzzy-explorer:query-selection",
-    "alt-f": "fuzzy-explorer:claude-chat",
     "f5": "fuzzy-explorer:refresh-index"
   }
 }
