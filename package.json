@@ -81,7 +81,7 @@
     }
   },
   "dependencies": {
-    "@lumine-code/season": "github:lumine-code/season#6a7336d4be7ed778bebde141193317f82bf4c862"
+    "@lumine-code/season": "github:lumine-code/season#e46f11c96163e4183a2747d4fd81e0b02f6b9682"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
