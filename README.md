@@ -10,7 +10,7 @@ Fuzzy search files across user-defined directories.
 
 ## Installation
 
-To install `fuzzy-explorer` search for _fuzzy-explorer_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/fuzzy-explorer`.
+To install `fuzzy-explorer` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/fuzzy-explorer`.
 
 ## Commands
 
@@ -49,7 +49,7 @@ Create a config file at the Lumine config path, `explorer.json`, with an array o
 
 ## Services
 
-- **open-external** (`^1.0.0`): consumed to open files with the configured external application.
+- `open-external`: consumed to open files with the configured external application.
 
 ## Customization
 
