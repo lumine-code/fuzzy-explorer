@@ -22,7 +22,7 @@ describe("fuzzy-explorer item actions", () => {
     const openExternal = byCommand.get("fuzzy-explorer:open-external");
     expect(openExternal.name).toBe("Open External");
     expect(openExternal.description).toBe("Open the file in the default external program");
-    expect(openExternal.keystrokes).toEqual(["alt-enter"]);
+    expect(openExternal.keystrokes).toEqual(["alt-f12"]);
 
     // `alt-v` is a chord prefix and nothing else. Binding it as a complete
     // keystroke too made every press sit out the 1000 ms partial-match timeout
