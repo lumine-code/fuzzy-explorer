@@ -5,6 +5,7 @@ Fuzzy search files across user-defined directories.
 ## Features
 
 - **Fast fuzzy search**: Uses algorithm with smart scoring.
+- **Recently opened first**: Keeps the files you opened at the top of the unfiltered list, ruled off from the rest.
 - **Manual refresh**: Cache updates only when triggered by user.
 - **External opening**: Open files with external applications through the `open-external` service.
 
@@ -18,7 +19,8 @@ Commands available in `lumine-workspace`:
 
 - `fuzzy-explorer:toggle`: toggle the fuzzy explorer panel,
 - `fuzzy-explorer:refresh`: refresh the file cache,
-- `fuzzy-explorer:edit`: open the configuration file.
+- `fuzzy-explorer:edit`: open the configuration file,
+- `fuzzy-explorer:clear-recent`: forget the recently opened files.
 
 Commands available in `.fuzzy-explorer`, all listed with their keybindings in the item-actions list (F12):
 

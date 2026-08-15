@@ -39,10 +39,18 @@
     "lumine-workspace": [
       "fuzzy-explorer:toggle",
       "fuzzy-explorer:refresh",
-      "fuzzy-explorer:edit"
+      "fuzzy-explorer:edit",
+      "fuzzy-explorer:clear-recent"
     ]
   },
   "configSchema": {
+    "recentCount": {
+      "title": "Number of Recent Files",
+      "description": "How many recently opened files to keep at the top of the list.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 10
+    },
     "ignoredNames": {
       "title": "Ignored Names",
       "description": "List of glob patterns. Files matching these patterns will be ignored.",
