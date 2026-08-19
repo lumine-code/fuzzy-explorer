@@ -29,6 +29,9 @@
     "alt-/": "fuzzy-explorer:use-forward-slashes",
     "alt-\\": "fuzzy-explorer:use-backslashes",
     "alt-q": "fuzzy-explorer:query-selected-path",
+    "alt-w alt-x": "fuzzy-explorer:cut-file",
+    "alt-w alt-c": "fuzzy-explorer:copy-file",
+    "alt-w alt-v": "fuzzy-explorer:paste-into-folder",
     "alt-s": "fuzzy-explorer:query-selection",
     "f5": "fuzzy-explorer:refresh-index"
   }

@@ -86,6 +86,11 @@
       "versions": {
         "^1.0.0": "consumeOpenExternal"
       }
+    },
+    "native-clip": {
+      "versions": {
+        "^1.0.0": "consumeNativeClip"
+      }
     }
   },
   "dependencies": {

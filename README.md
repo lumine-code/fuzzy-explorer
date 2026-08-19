@@ -39,7 +39,10 @@ Commands available in `.fuzzy-explorer`, all listed with their keybindings in th
 - `fuzzy-explorer:use-forward-slashes`: use forward slashes in inserted and copied paths,
 - `fuzzy-explorer:use-backslashes`: use backslashes in inserted and copied paths,
 - `fuzzy-explorer:query-selected-path`: continue the query from the selected path,
-- `fuzzy-explorer:query-selection`: use the editor selection as the query.
+- `fuzzy-explorer:query-selection`: use the editor selection as the query,
+- `fuzzy-explorer:cut-file`: cut the entry to the system clipboard,
+- `fuzzy-explorer:copy-file`: copy the entry to the system clipboard,
+- `fuzzy-explorer:paste-into-folder`: paste the system clipboard into the selected directory.
 
 ## Configuration
 
@@ -52,6 +55,7 @@ Create a config file at the Lumine config path, `explorer.json`, with an array o
 ## Services
 
 - `open-external`: consumed to open files with the configured external application.
+- `native-clip`: consumed to cut, copy and paste files through the system clipboard.
 
 ## Customization
 
