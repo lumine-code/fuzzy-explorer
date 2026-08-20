@@ -42,7 +42,8 @@ Commands available in `.fuzzy-explorer`, all listed with their keybindings in th
 - `fuzzy-explorer:query-selection`: use the editor selection as the query,
 - `fuzzy-explorer:cut-file`: cut the entry to the system clipboard,
 - `fuzzy-explorer:copy-file`: copy the entry to the system clipboard,
-- `fuzzy-explorer:paste-into-folder`: paste the system clipboard into the selected directory.
+- `fuzzy-explorer:paste-into-folder`: paste the system clipboard into the selected directory,
+- `fuzzy-explorer:remove-from-recent`: drop the selected entry from the recent section, offered only while a recent one is selected.
 
 ## Configuration
 

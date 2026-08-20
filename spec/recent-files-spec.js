@@ -92,6 +92,56 @@ describe("fuzzy-explorer recent files", () => {
     expect(main.selectList.refs.queryEditor.getText()).toBe(__dirname + require("path").sep);
   });
 
+  it("drops one entry from the section without closing the list", async () => {
+    main.recordRecent("/tmp/gamma.txt");
+    main.recordRecent("/tmp/beta.txt");
+    const selectList = await showList();
+    await selectList.selectItem("/tmp/beta.txt");
+
+    lumine.commands.dispatch(selectList.element, "fuzzy-explorer:remove-from-recent");
+    await lumine.views.getNextUpdatePromise();
+
+    expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
+    expect(selectList.isVisible()).toBe(true);
+    // The row is still the selected one, at the place its own name puts it.
+    expect(selectList.getSelectedItem()).toBe("/tmp/beta.txt");
+    expect(selectList.items[0]).toBe("/tmp/gamma.txt");
+  });
+
+  it("stays open when the action is run from the item-actions list", async () => {
+    // The path the action is actually reached by: F12, pick the row, and the
+    // list returns here and dispatches. Nothing along it may close the picker.
+    main.recordRecent("/tmp/gamma.txt");
+    main.recordRecent("/tmp/beta.txt");
+    const selectList = await showList();
+    await selectList.selectItem("/tmp/beta.txt");
+
+    await selectList.showItemActions();
+    expect(selectList.itemActionsList.isVisible()).toBe(true);
+    selectList.runItemAction("fuzzy-explorer:remove-from-recent");
+    await lumine.views.getNextUpdatePromise();
+
+    expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
+    expect(selectList.isVisible()).toBe(true);
+    expect(selectList.itemActionsList.isVisible()).toBe(false);
+    expect(selectList.getSelectedItem()).toBe("/tmp/beta.txt");
+  });
+
+  it("offers the action only while a recent entry is selected", async () => {
+    main.recordRecent("/tmp/beta.txt");
+    const selectList = await showList();
+
+    await selectList.selectItem("/tmp/beta.txt");
+    let actions = selectList.itemActions().map((action) => action.command);
+    expect(actions).toContain("fuzzy-explorer:remove-from-recent");
+
+    await selectList.selectItem("/tmp/alpha.txt");
+    actions = selectList.itemActions().map((action) => action.command);
+    expect(actions).not.toContain("fuzzy-explorer:remove-from-recent");
+    // The rest of the package's actions are unaffected by the filter.
+    expect(actions).toContain("fuzzy-explorer:open-external");
+  });
+
   it("caps the list at the configured count", () => {
     lumine.config.set("fuzzy-explorer.recentCount", 2);
     main.recordRecent("/tmp/alpha.txt");
