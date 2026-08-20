@@ -19,6 +19,9 @@ describe("fuzzy-explorer recent files", () => {
   });
 
   afterEach(async () => {
+    // The main module is a singleton across the suite, so a service stubbed
+    // into it has to be taken back out.
+    main.openExternalService = null;
     await lumine.packages.deactivatePackage("fuzzy-explorer");
   });
 
@@ -59,6 +62,34 @@ describe("fuzzy-explorer recent files", () => {
 
     expect(main.recentlyUsed[0]).toBe("/tmp/alpha.txt");
     expect(main.serialize()).toEqual({ recentlyUsed: main.recentlyUsed });
+  });
+
+  it("records the entry for every action over it, not only an open", () => {
+    main.openExternalService = {
+      openExternal: jasmine.createSpy("openExternal"),
+      showInFolder: jasmine.createSpy("showInFolder"),
+    };
+    spyOn(main.selectList, "getSelectedItem").and.returnValue("/tmp/alpha.txt");
+    spyOn(lumine.clipboard, "write");
+
+    main.performAction("open-external");
+    expect(main.openExternalService.openExternal).toHaveBeenCalledWith("/tmp/alpha.txt");
+    expect(main.recentlyUsed).toEqual(["/tmp/alpha.txt"]);
+
+    main.performAction("path", { op: "copy", rel: "a" });
+    expect(lumine.clipboard.write).toHaveBeenCalledWith("/tmp/alpha.txt");
+    expect(main.recentlyUsed).toEqual(["/tmp/alpha.txt"]);
+  });
+
+  it("records nothing for a directory it only continued the query into", () => {
+    // A directory the query walks into is not an entry the user acted on, and
+    // recording one would fill the section with the path to every file opened.
+    spyOn(main.selectList, "getSelectedItem").and.returnValue(__dirname);
+
+    main.performAction("open");
+
+    expect(main.recentlyUsed).toEqual([]);
+    expect(main.selectList.refs.queryEditor.getText()).toBe(__dirname + require("path").sep);
   });
 
   it("caps the list at the configured count", () => {

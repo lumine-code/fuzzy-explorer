@@ -45,8 +45,8 @@
   },
   "configSchema": {
     "recentCount": {
-      "title": "Number of Recent Files",
-      "description": "How many recently opened files to keep at the top of the list.",
+      "title": "Number of Recent Entries",
+      "description": "How many recently used entries to keep at the top of the list.",
       "type": "integer",
       "minimum": 0,
       "default": 10
