@@ -81,6 +81,35 @@ describe("fuzzy-explorer recent files", () => {
     expect(main.recentlyUsed).toEqual(["/tmp/alpha.txt"]);
   });
 
+  it("opens an alt-clicked entry through open-external when the service is available", async () => {
+    const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    main.openExternalService = { openExternal: jasmine.createSpy("openExternal") };
+    const selectList = await showList();
+    await selectList.selectItem("/tmp/alpha.txt");
+    const row = selectList.listItems[selectList.items.indexOf("/tmp/gamma.txt")].component.element;
+
+    row.dispatchEvent(
+      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+    );
+
+    expect(main.openExternalService.openExternal).toHaveBeenCalledWith("/tmp/gamma.txt");
+    expect(open).not.toHaveBeenCalled();
+    expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
+  });
+
+  it("keeps the ordinary click action for alt-click when open-external is unavailable", async () => {
+    const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    const selectList = await showList();
+    const row = selectList.listItems[selectList.items.indexOf("/tmp/gamma.txt")].component.element;
+
+    row.dispatchEvent(
+      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+    );
+
+    expect(open).toHaveBeenCalled();
+    expect(open.calls.mostRecent().args[0]).toBe("/tmp/gamma.txt");
+  });
+
   it("records nothing for a directory it only continued the query into", () => {
     // A directory the query walks into is not an entry the user acted on, and
     // recording one would fill the section with the path to every file opened.

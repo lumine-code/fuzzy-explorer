@@ -7,7 +7,7 @@ Fuzzy search files across user-defined directories.
 - **Fast fuzzy search**: Uses algorithm with smart scoring.
 - **Recently used first**: keeps the entries you acted on at the top of the unfiltered list, ruled off from the rest.
 - **Manual refresh**: Cache updates only when triggered by user.
-- **External opening**: Open files with external applications through the `open-external` service.
+- **External opening**: alt-click a result to open it through the `open-external` service when available.
 
 ## Installation
 
