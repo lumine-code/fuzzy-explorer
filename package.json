@@ -53,7 +53,7 @@
     },
     "ignoredNames": {
       "title": "Ignored Names",
-      "description": "List of glob patterns. Files matching these patterns will be ignored.",
+      "description": "Additional glob patterns excluded from this explorer on top of the editor's Ignored Names.",
       "type": "array",
       "items": {
         "type": "string"
