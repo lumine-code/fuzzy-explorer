@@ -1,5 +1,6 @@
 describe("fuzzy-explorer item actions", () => {
   let main;
+  const selectedPath = __filename;
 
   beforeEach(async () => {
     jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
@@ -16,6 +17,7 @@ describe("fuzzy-explorer item actions", () => {
   });
 
   it("derives its actions from the command registrations and the keymap", () => {
+    spyOn(main.selectList, "getSelectedItem").and.returnValue(selectedPath);
     const actions = main.selectList.itemActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
 
@@ -37,11 +39,41 @@ describe("fuzzy-explorer item actions", () => {
     expect(byCommand.get("fuzzy-explorer:copy-absolute-path").description).toBe(
       "Copy the full path from the filesystem root to the clipboard.",
     );
+    expect(byCommand.get("fuzzy-explorer:open").keystrokes).toEqual(["enter"]);
+    expect(byCommand.get("fuzzy-explorer:edit").scope).toBe("list");
 
     // Chrome and global commands stay out.
     expect(byCommand.has("core:confirm")).toBe(false);
     expect(byCommand.has("select-list:actions")).toBe(false);
     expect(byCommand.has("fuzzy-explorer:toggle")).toBe(false);
+  });
+
+  it("offers recent-history actions only while that history exists", () => {
+    spyOn(main.selectList, "getSelectedItem").and.returnValue(null);
+
+    expect(
+      main.selectList
+        .itemActions()
+        .some(({ command }) => command === "fuzzy-explorer:clear-recent"),
+    ).toBe(false);
+
+    main.recentlyUsed = [selectedPath];
+    const clear = main.selectList
+      .itemActions()
+      .find(({ command }) => command === "fuzzy-explorer:clear-recent");
+    expect(clear.scope).toBe("list");
+  });
+
+  it("hides the picker before opening its configuration", () => {
+    const fs = require("fs");
+    spyOn(fs, "existsSync").and.returnValue(true);
+    const hide = spyOn(main.selectList, "hide");
+    spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+
+    main.editConfig();
+
+    expect(hide).toHaveBeenCalled();
+    expect(lumine.workspace.open).toHaveBeenCalled();
   });
 
   it("shows the actions as a flow step and runs one against the master list", async () => {
