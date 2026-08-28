@@ -22,7 +22,7 @@ Commands available in `lumine-workspace`:
 - `fuzzy-explorer:edit`: open the configuration file,
 - `fuzzy-explorer:clear-recent`: forget the recently used entries.
 
-Commands available in `.fuzzy-explorer`, all listed with their keybindings in the item-actions list (F12):
+Commands available in `.fuzzy-explorer`:
 
 - `fuzzy-explorer:open`: open the selected file,
 - `fuzzy-explorer:open-external`: open the file in the default external program,

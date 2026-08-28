@@ -138,7 +138,7 @@ describe("fuzzy-explorer recent files", () => {
   });
 
   it("stays open when the action is run from the item-actions list", async () => {
-    // The path the action is actually reached by: F12, pick the row, and the
+    // The path the action is actually reached by: Shift+F10, pick the row, and the
     // list returns here and dispatches. Nothing along it may close the picker.
     main.recordRecent("/tmp/gamma.txt");
     main.recordRecent("/tmp/beta.txt");
