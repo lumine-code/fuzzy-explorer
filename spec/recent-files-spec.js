@@ -47,7 +47,7 @@ describe("fuzzy-explorer recent files", () => {
     main.recordRecent("/tmp/beta.txt");
     const selectList = await showList();
 
-    selectList.refs.queryEditor.setText("alpha");
+    selectList.getQueryEditor().setText("alpha");
     await lumine.views.getNextUpdatePromise();
 
     expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
@@ -118,7 +118,7 @@ describe("fuzzy-explorer recent files", () => {
     main.performAction("open");
 
     expect(main.recentlyUsed).toEqual([]);
-    expect(main.selectList.refs.queryEditor.getText()).toBe(__dirname + require("path").sep);
+    expect(main.selectList.getQueryEditor().getText()).toBe(__dirname + require("path").sep);
   });
 
   it("drops one entry from the section without closing the list", async () => {
