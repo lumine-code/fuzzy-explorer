@@ -10,7 +10,7 @@ describe("fuzzy-explorer recent files", () => {
     const opening = lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
     main = (await activation).mainModule;
     await opening;
-    main.selectList.hide();
+    main.selectListHost.hide();
     await main.selectList.clearRecentItems();
 
     // The index is built from the user's own glob config, so the specs seed it
@@ -27,7 +27,7 @@ describe("fuzzy-explorer recent files", () => {
   });
 
   async function showList() {
-    await main.selectList.show();
+    await main.selectListHost.show();
     return main.selectList;
   }
 
@@ -150,7 +150,7 @@ describe("fuzzy-explorer recent files", () => {
     await lumine.views.getNextUpdatePromise();
 
     expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
-    expect(selectList.isVisible()).toBe(true);
+    expect(main.selectListHost.isVisible()).toBe(true);
     // The row is still the selected one, at the place its own name puts it.
     expect(selectList.getSelectedItem()).toBe("/tmp/beta.txt");
     expect(selectList.getDisplayedItems()[0]).toBe("/tmp/gamma.txt");
@@ -165,7 +165,7 @@ describe("fuzzy-explorer recent files", () => {
     await selectList.runAction("select-list:remove-recent");
 
     expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
-    expect(selectList.isVisible()).toBe(true);
+    expect(main.selectListHost.isVisible()).toBe(true);
     expect(selectList.getSelectedItem()).toBe("/tmp/beta.txt");
   });
 
@@ -214,7 +214,7 @@ describe("fuzzy-explorer recent files", () => {
     const activation = lumine.packages.activatePackage("fuzzy-explorer");
     lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
     const pack = await activation;
-    pack.mainModule.selectList.hide();
+    pack.mainModule.selectListHost.hide();
 
     expect(pack.mainModule.recentlyUsed).toEqual(["/tmp/beta.txt"]);
   });

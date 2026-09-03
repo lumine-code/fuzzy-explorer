@@ -7,7 +7,7 @@ describe("fuzzy-explorer cache synchronization", () => {
     const activation = lumine.packages.activatePackage("fuzzy-explorer");
     lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
     main = (await activation).mainModule;
-    main.selectList.hide();
+    main.selectListHost.hide();
   });
 
   afterEach(async () => {
