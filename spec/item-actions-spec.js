@@ -16,9 +16,9 @@ describe("fuzzy-explorer item actions", () => {
     await lumine.packages.deactivatePackage("fuzzy-explorer");
   });
 
-  it("derives its actions from the command registrations and the keymap", () => {
-    spyOn(main.selectList, "getSelectedItem").and.returnValue(selectedPath);
-    const actions = main.selectList.itemActions();
+  it("describes its explicit actions with command metadata and keybindings", async () => {
+    await main.selectList.update({ items: [selectedPath] });
+    const actions = main.selectList.getAvailableActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
 
     const openExternal = byCommand.get("fuzzy-explorer:open-external");
@@ -40,7 +40,7 @@ describe("fuzzy-explorer item actions", () => {
       "Copy the full path from the filesystem root to the clipboard.",
     );
     expect(byCommand.get("fuzzy-explorer:open").keystrokes).toEqual(["enter"]);
-    expect(byCommand.get("fuzzy-explorer:edit").scope).toBe("list");
+    expect(byCommand.get("fuzzy-explorer:edit").group).toBe("Explorer");
 
     // Chrome and global commands stay out.
     expect(byCommand.has("core:confirm")).toBe(false);
@@ -48,54 +48,46 @@ describe("fuzzy-explorer item actions", () => {
     expect(byCommand.has("fuzzy-explorer:toggle")).toBe(false);
   });
 
-  it("offers recent-history actions only while that history exists", () => {
-    spyOn(main.selectList, "getSelectedItem").and.returnValue(null);
+  it("offers the core recent-history actions only while that history exists", async () => {
+    main.selectList.selectNone();
 
     expect(
       main.selectList
-        .itemActions()
-        .some(({ command }) => command === "fuzzy-explorer:clear-recent"),
+        .getAvailableActions()
+        .some(({ command }) => command === "select-list:clear-recents"),
     ).toBe(false);
 
-    main.recentlyUsed = [selectedPath];
+    await main.selectList.setRecentItemIds([selectedPath]);
     const clear = main.selectList
-      .itemActions()
-      .find(({ command }) => command === "fuzzy-explorer:clear-recent");
-    expect(clear.scope).toBe("list");
+      .getAvailableActions()
+      .find(({ command }) => command === "select-list:clear-recents");
+    expect(clear.context).toBe("dialog");
   });
 
-  it("hides the picker before opening its configuration", () => {
+  it("uses the action disposition to hide before opening its configuration", async () => {
     const fs = require("fs");
     spyOn(fs, "existsSync").and.returnValue(true);
-    const hide = spyOn(main.selectList, "hide");
     spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    await main.selectList.show();
 
-    main.editConfig();
+    await main.selectList.runAction("fuzzy-explorer:edit");
 
-    expect(hide).toHaveBeenCalled();
+    expect(main.selectList.isVisible()).toBe(false);
     expect(lumine.workspace.open).toHaveBeenCalled();
   });
 
-  it("shows the actions as a flow step and runs one against the master list", async () => {
-    main.selectList.show();
+  it("shows the shared action palette as a flow step and runs against the master list", async () => {
+    await main.selectList.show();
 
-    await main.selectList.showItemActions();
+    expect(await main.selectList.showActions()).toBe(true);
 
-    expect(main.selectList.itemActionsList.isVisible()).toBeTruthy();
     expect(lumine.workspace.getModalTrail()).toEqual(["Explorer", "Actions"]);
-    // The actions list wears the package class, so the package keymap
-    // resolves action keystrokes inside it too.
-    expect(main.selectList.itemActionsList.element.classList.contains("fuzzy-explorer")).toBe(true);
+    lumine.workspace.popModal();
 
     const spy = spyOn(main, "update");
-    const index = main.selectList.itemActionsList.items.findIndex(
-      (item) => item.command === "fuzzy-explorer:refresh-index",
-    );
-    main.selectList.itemActionsList.selectIndex(index);
-    main.selectList.itemActionsList.confirmSelection();
+    await main.selectList.runAction("fuzzy-explorer:refresh-index");
 
     expect(spy).toHaveBeenCalled();
     expect(main.selectList.isVisible()).toBeTruthy();
-    expect(main.selectList.itemActionsList.isVisible()).toBeFalsy();
   });
 });
