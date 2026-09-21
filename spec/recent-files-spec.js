@@ -6,10 +6,10 @@ describe("fuzzy-explorer recent files", () => {
     jasmine.attachToDOM(workspaceElement);
     lumine.config.set("fuzzy-explorer.recentCount", 10);
 
-    const activation = lumine.packages.activatePackage("fuzzy-explorer");
+    await lumine.packages.startPackage("fuzzy-explorer");
     const opening = lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
-    main = (await activation).mainModule;
     await opening;
+    main = lumine.packages.getLoadedPackage("fuzzy-explorer").mainModule;
     main.selectListHost.hide();
     await main.selectList.clearRecentItems();
 
@@ -211,9 +211,9 @@ describe("fuzzy-explorer recent files", () => {
     // Deactivation stores what serialize() returned, and the package activates
     // on its commands, so the round trip needs one dispatched to complete.
     await lumine.packages.deactivatePackage("fuzzy-explorer");
-    const activation = lumine.packages.activatePackage("fuzzy-explorer");
-    lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
-    const pack = await activation;
+    await lumine.packages.startPackage("fuzzy-explorer");
+    await lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
+    const pack = lumine.packages.getLoadedPackage("fuzzy-explorer");
     pack.mainModule.selectListHost.hide();
 
     expect(pack.mainModule.recentlyUsed).toEqual(["/tmp/beta.txt"]);

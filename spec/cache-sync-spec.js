@@ -4,9 +4,9 @@ describe("fuzzy-explorer cache synchronization", () => {
   beforeEach(async () => {
     jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
     spyOn(lumine.window, "onDidReceive").and.callThrough();
-    const activation = lumine.packages.activatePackage("fuzzy-explorer");
-    lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
-    main = (await activation).mainModule;
+    await lumine.packages.startPackage("fuzzy-explorer");
+    await lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
+    main = lumine.packages.getLoadedPackage("fuzzy-explorer").mainModule;
     main.selectListHost.hide();
   });
 

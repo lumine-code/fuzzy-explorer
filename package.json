@@ -35,14 +35,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
-  "activationCommands": {
-    "lumine-workspace": [
-      "fuzzy-explorer:toggle",
-      "fuzzy-explorer:refresh",
-      "fuzzy-explorer:edit",
-      "fuzzy-explorer:clear-recent"
-    ]
-  },
   "configSchema": {
     "recentCount": {
       "title": "Number of Recent Entries",

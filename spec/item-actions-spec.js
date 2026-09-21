@@ -6,9 +6,9 @@ describe("fuzzy-explorer item actions", () => {
     jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
     // The package activates on its commands, so dispatch one to trigger it;
     // activation also loads the package keymap the actions list reads.
-    const activation = lumine.packages.activatePackage("fuzzy-explorer");
-    lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
-    main = (await activation).mainModule;
+    await lumine.packages.startPackage("fuzzy-explorer");
+    await lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
+    main = lumine.packages.getLoadedPackage("fuzzy-explorer").mainModule;
     main.selectListHost.hide();
   });
 
@@ -74,6 +74,21 @@ describe("fuzzy-explorer item actions", () => {
 
     expect(main.selectListHost.isVisible()).toBe(false);
     expect(lumine.workspace.open).toHaveBeenCalled();
+  });
+
+  it("requests native-clip before the first file clipboard action", async () => {
+    const nativeClip = { copyPaths: jasmine.createSpy("copyPaths").and.resolveTo(true) };
+    let delivery;
+    const request = spyOn(lumine.packages, "requestService").and.callFake(async () => {
+      delivery = main.consumeNativeClip(nativeClip);
+      return true;
+    });
+
+    expect(await main.performAction("clip", { effect: "copy" }, { item: selectedPath })).toBe(true);
+
+    expect(request).toHaveBeenCalledWith("native-clip", "^1.0.0");
+    expect(nativeClip.copyPaths).toHaveBeenCalledWith([selectedPath]);
+    delivery.dispose();
   });
 
   it("shows the shared action palette as a flow step and runs against the master list", async () => {
