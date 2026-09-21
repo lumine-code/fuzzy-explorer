@@ -7,10 +7,7 @@ describe("fuzzy-explorer bootstrap", () => {
     const pack = await lumine.packages.startPackage("fuzzy-explorer");
     expect(pack.mainModule.selectListHost).toBeNull();
 
-    await lumine.commands.dispatch(
-      lumine.views.getView(lumine.workspace),
-      "fuzzy-explorer:toggle",
-    );
+    await lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-explorer:toggle");
     expect(pack.mainModule.selectListHost).not.toBeNull();
 
     await lumine.packages.deactivatePackage("fuzzy-explorer");
