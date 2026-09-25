@@ -26,9 +26,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "You can search files across your own list of directories with {{ 'fuzzy-explorer:toggle' | keystroke }}"
-  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
@@ -71,6 +68,13 @@
         }
       ],
       "default": 0
+    }
+  },
+  "providedServices": {
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
+      }
     }
   },
   "consumedServices": {
