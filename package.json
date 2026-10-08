@@ -90,11 +90,11 @@
     }
   },
   "dependencies": {
-    "@lumine-code/season": "github:lumine-code/season#298a50e3fc2dcb620f525b922ecce8ab636a25dd"
+    "@lumine-code/season": "github:lumine-code/season#91130eed308354264263635544a4ce346b68914e"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@lumine-code/fs-temp": "github:lumine-code/fs-temp#2b4bd6242c342e98f4302a546cfc87b158c2c177",
+    "@lumine-code/fs-temp": "github:lumine-code/fs-temp#ef0edb8764a963d1bc4103ec7038543309e544e4",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.4.1",
