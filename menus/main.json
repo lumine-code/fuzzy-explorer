@@ -11,10 +11,6 @@
               "command": "fuzzy-explorer:toggle"
             },
             {
-              "label": "Refresh",
-              "command": "fuzzy-explorer:refresh"
-            },
-            {
               "label": "Edit",
               "command": "fuzzy-explorer:edit"
             }

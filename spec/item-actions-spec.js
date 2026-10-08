@@ -16,6 +16,25 @@ describe("fuzzy-explorer item actions", () => {
     await lumine.packages.deactivatePackage("fuzzy-explorer");
   });
 
+  it("keeps rebuilding local and available without a selected file", async () => {
+    main.selectList.selectNone();
+    const refresh = main.selectList
+      .getAvailableActions()
+      .find(({ command }) => command === "fuzzy-explorer:refresh-index");
+
+    expect(refresh.context).toBe("dialog");
+    expect(refresh.keystrokes).toEqual(["f5"]);
+    const commands = lumine.commands
+      .findCommands({ target: lumine.views.getView(lumine.workspace) })
+      .map(({ name }) => name);
+    expect(commands).not.toContain("fuzzy-explorer:refresh");
+    expect(commands).not.toContain("fuzzy-explorer:refresh-index");
+
+    const rebuild = spyOn(main, "build");
+    await main.selectList.runAction("fuzzy-explorer:refresh-index");
+    expect(rebuild).toHaveBeenCalledTimes(1);
+  });
+
   it("describes its explicit actions with command metadata and keybindings", async () => {
     await main.selectList.update({ items: [selectedPath] });
     const actions = main.selectList.getAvailableActions();

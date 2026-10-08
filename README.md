@@ -18,7 +18,6 @@ To install `fuzzy-explorer` search for it in the Install pane of the Lumine sett
 Commands available in `lumine-workspace`:
 
 - `fuzzy-explorer:toggle`: toggle the fuzzy explorer panel,
-- `fuzzy-explorer:refresh`: refresh the file cache,
 - `fuzzy-explorer:edit`: open the configuration file,
 - `fuzzy-explorer:clear-recent`: forget the recently used entries.
 
