@@ -57,6 +57,8 @@ Create a config file at the Lumine config path, `explorer.json`, with an array o
 - `open-external`: consumed to open files with the configured external application.
 - `native-clip`: consumed to cut, copy and paste files through the system clipboard.
 
+Each provider can withdraw independently. The most recently delivered provider is used while available, with an earlier live provider restored when it withdraws.
+
 ## Customization
 
 Resize the results panel by adding CSS to your `styles.css`:
