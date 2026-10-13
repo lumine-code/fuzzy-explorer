@@ -17,6 +17,15 @@
           ]
         }
       ]
+    },
+    {
+      "label": "File",
+      "submenu": [
+        {
+          "label": "Browse Files…",
+          "command": "fuzzy-explorer:toggle"
+        }
+      ]
     }
   ]
 }
