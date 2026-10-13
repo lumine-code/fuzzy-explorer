@@ -2,9 +2,10 @@
   "title": "fuzzy-explorer",
   "description": "Search configured directories for project files.",
   "recordedOn": "2026-10-13",
-  "sourceRevision": "8f112b99c2fb3af0263d8a93c5efb3ddca5b9b13",
+  "sourceRevision": "99db4f573fd8c618e2d01ab04de22357c4fffd2d",
   "mode": "normal",
   "fontSettings": "default",
+  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
   "images": [
     {
       "file": "demo.png",
