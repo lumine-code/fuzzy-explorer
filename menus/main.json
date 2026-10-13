@@ -23,7 +23,9 @@
       "submenu": [
         {
           "label": "Browse Files…",
-          "command": "fuzzy-explorer:toggle"
+          "command": "fuzzy-explorer:toggle",
+          "group": "files",
+          "order": 20
         }
       ]
     }
