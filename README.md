@@ -9,6 +9,8 @@ Fuzzy search files across user-defined directories.
 - **Manual refresh**: Cache updates only when triggered by user.
 - **External opening**: alt-click a result to open it through the `open-external` service when available.
 
+![Search configured directories for project files.](.github/demo.png)
+
 ## Installation
 
 To install `fuzzy-explorer` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/fuzzy-explorer`.
