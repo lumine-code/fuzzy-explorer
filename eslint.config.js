@@ -33,6 +33,11 @@ module.exports = [
     },
   },
   {
+    // The demo source fixture uses ES module syntax.
+    files: ["demo/Signal Lab/src/signal.js"],
+    languageOptions: { sourceType: "module" },
+  },
+  {
     // The lint configuration itself requires devDependencies; it never ships.
     files: ["eslint.config.js"],
     rules: {
