@@ -94,7 +94,7 @@ describe("fuzzy-explorer recent files", () => {
     expect(main.recentlyUsed).toEqual(["/tmp/alpha.txt"]);
   });
 
-  it("opens an alt-clicked entry through open-external when the service is available", async () => {
+  it("opens a Ctrl-Alt-clicked entry externally without also opening it in the editor", async () => {
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     main.openExternalService = { openExternal: jasmine.createSpy("openExternal") };
     const selectList = await showList();
@@ -104,7 +104,13 @@ describe("fuzzy-explorer recent files", () => {
 
     const action = nextAction();
     row.dispatchEvent(
-      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+      new MouseEvent("click", {
+        altKey: true,
+        ctrlKey: true,
+        button: 0,
+        bubbles: true,
+        cancelable: true,
+      }),
     );
     await action;
 
@@ -113,8 +119,10 @@ describe("fuzzy-explorer recent files", () => {
     expect(main.recentlyUsed).toEqual(["/tmp/gamma.txt"]);
   });
 
-  it("keeps the ordinary click action for alt-click when open-external is unavailable", async () => {
+  it("opens the chooser for the Alt-clicked entry even without an external service", async () => {
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    const choose = jasmine.createSpy("choose opener");
+    const command = lumine.commands.add("lumine-workspace", "open-with:toggle", choose);
     const selectList = await showList();
     const index = selectList.getDisplayedItems().indexOf("/tmp/gamma.txt");
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
@@ -123,10 +131,14 @@ describe("fuzzy-explorer recent files", () => {
     row.dispatchEvent(
       new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
     );
-    await action;
+    const result = await action;
+    command.dispose();
 
-    expect(open).toHaveBeenCalled();
-    expect(open.calls.mostRecent().args[0]).toBe("/tmp/gamma.txt");
+    expect(result.command).toBe("fuzzy-explorer:open-with");
+    expect(choose).toHaveBeenCalledTimes(1);
+    expect(choose.calls.mostRecent().args[0].detail.path).toBe("/tmp/gamma.txt");
+    expect(open).not.toHaveBeenCalled();
+    expect(main.recentlyUsed).toEqual([]);
   });
 
   it("records nothing for a directory it only continued the query into", async () => {

@@ -6,12 +6,10 @@
     "alt-e": "fuzzy-explorer:toggle"
   },
   ".fuzzy-explorer lumine-text-editor[mini]": {
-    // The ecosystem's pair for handing a path to the system: alt-f12 opens it,
-    // ctrl-f12 shows it in the file manager. open-external binds the same two
-    // in the tree view, the image editor and the PDF view, so the keys mean
-    // one thing everywhere rather than one thing per surface.
-    "alt-f12": "fuzzy-explorer:open-external",
-    "ctrl-f12": "fuzzy-explorer:show-in-folder",
+    "alt-enter": "fuzzy-explorer:open-with",
+    "shift-enter": "fuzzy-explorer:open-pending",
+    "ctrl-alt-enter": "fuzzy-explorer:open-external",
+    "ctrl-shift-enter": "fuzzy-explorer:show-in-folder",
     "alt-left": "fuzzy-explorer:split-left",
     "alt-right": "fuzzy-explorer:split-right",
     "alt-up": "fuzzy-explorer:split-up",
