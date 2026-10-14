@@ -1,17 +1,87 @@
 {
   "title": "fuzzy-explorer",
   "description": "Search configured directories for project files.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "99db4f573fd8c618e2d01ab04de22357c4fffd2d",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "c7badc9193d2128fdd72a448849a869f3c975485",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
-  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
+  "scenario": "demo.js",
+  "recipeHash": "afb35c768b19f191efbc956fdf8480886268b5a21930cced5b44c81f63404598",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1200, "height": 760 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "d0b1751fffac65f10a405545e5f01cf7ad05c0bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "c7badc9193d2128fdd72a448849a869f3c975485",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "fuzzy-explorer": {
+      "revision": "c7badc9193d2128fdd72a448849a869f3c975485",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-javascript": {
+      "revision": "ae2e6968e3a349fb4d09ce53e339a0f8cce903aa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "tree-view": {
+      "revision": "fe6f35de06f036837aa9c2d3b138b3d72557bcc4",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "Signal Lab/data/samples.csv",
+      "sha256": "2d35e3bb79e7e9086de59900ceef8f1eea104bfc4ad0de99236dba1f341e4719"
+    },
+    {
+      "file": "Signal Lab/docs/experiments.md",
+      "sha256": "fb3d0c9760047153815c692248e97c1d78abe70ce7a01c3bb2146a6b998b4501"
+    },
+    {
+      "file": "Signal Lab/package.json",
+      "sha256": "cb3a7618b04433243426e1193d0e49da9a776c4bf10e8eb6a147d4db53e189c8"
+    },
+    {
+      "file": "Signal Lab/README.md",
+      "sha256": "1359f188748fa3dd6e11b6aca489ed6dcf737f39dbf3ec55baf8bf695c75c81f"
+    },
+    {
+      "file": "Signal Lab/src/signal.js",
+      "sha256": "2a36953daadd1ae53070d0ff7ceab4624395fdb957104aa6e8ec92d785cadf1d"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Search configured directories for project files.",
       "width": 1200,
-      "height": 760
+      "height": 760,
+      "sha256": "f190115e71e7b954801572b3241e80ad07a680deeccfa61f68e0b9c2214dbf4f"
     }
   ]
 }
