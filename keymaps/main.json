@@ -7,9 +7,8 @@
   },
   ".fuzzy-explorer lumine-text-editor[mini]": {
     "alt-enter": "fuzzy-explorer:open-with",
-    "shift-enter": "fuzzy-explorer:open-pending",
     "ctrl-alt-enter": "fuzzy-explorer:open-external",
-    "ctrl-shift-enter": "fuzzy-explorer:show-in-folder",
+    "alt-shift-enter": "fuzzy-explorer:show-in-folder",
     "alt-left": "fuzzy-explorer:split-left",
     "alt-right": "fuzzy-explorer:split-right",
     "alt-up": "fuzzy-explorer:split-up",

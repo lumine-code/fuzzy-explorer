@@ -128,6 +128,30 @@ describe("fuzzy-explorer standard opening gestures", () => {
     expect(lumine.application.openWindow).not.toHaveBeenCalled();
   });
 
+  it("keeps the finder's opening pane when another pane becomes active before Alt-click", async () => {
+    const nativeChooser = (await lumine.packages.activatePackage("open-with")).mainModule;
+    const openingPane = host.window.getEditorContainer().getActivePane();
+    const otherPane = openingPane.splitRight();
+    otherPane.activate();
+    expect(host.window.getEditorContainer().getActivePane()).toBe(otherPane);
+    try {
+      const result = await click(items[1], { altKey: true });
+      expect(result.status).toBe("success");
+      const child = nativeChooser.pickers.get(host.window);
+      expect(child.context.path).toBe(betaPath);
+      expect(child.context.pane).toBe(openingPane);
+      await child.host.getModel().selectItemById("text-editor");
+      expect((await child.host.getModel().confirmSelection()).status).toBe("success");
+      const editor = openingPane.getItems().find((item) => item.getPath?.() === betaPath);
+      expect(editor.getText()).toBe("Beta content\n");
+      expect(lumine.workspace.paneForItem(editor)).toBe(openingPane);
+      expect(otherPane.getItems()).toEqual([]);
+    } finally {
+      await lumine.packages.deactivatePackage("open-with");
+      otherPane.destroy();
+    }
+  });
+
   it("Ctrl-Alt-clicks only the external action for the clicked item", async () => {
     const result = await click(items[1], { ctrlKey: true, altKey: true });
     expect(result.command).toBe("fuzzy-explorer:open-external");
@@ -138,8 +162,8 @@ describe("fuzzy-explorer standard opening gestures", () => {
     expect(lumine.application.openWindow).not.toHaveBeenCalled();
   });
 
-  it("Ctrl-Shift-clicks only the reveal action for the clicked item", async () => {
-    const result = await click(items[1], { ctrlKey: true, shiftKey: true });
+  it("Alt-Shift-clicks only the reveal action for the clicked item", async () => {
+    const result = await click(items[1], { altKey: true, shiftKey: true });
     expect(result.command).toBe("fuzzy-explorer:show-in-folder");
     expect(result.status).toBe("success");
     expect(external.showInFolder.calls.allArgs()).toEqual([[betaPath]]);
@@ -176,40 +200,72 @@ describe("fuzzy-explorer standard opening gestures", () => {
     expect(external.openExternal).not.toHaveBeenCalled();
   });
 
-  it("resolves the standard opener, pending and system-action keys locally", () => {
+  it("resolves the standard opener and system-action keys locally", () => {
     const input = model.getQueryEditor().getElement();
     for (const [keystrokes, command] of [
       ["alt-enter", "fuzzy-explorer:open-with"],
-      ["shift-enter", "fuzzy-explorer:open-pending"],
       ["ctrl-alt-enter", "fuzzy-explorer:open-external"],
-      ["ctrl-shift-enter", "fuzzy-explorer:show-in-folder"],
+      ["alt-shift-enter", "fuzzy-explorer:show-in-folder"],
     ])
       expect(lumine.keymaps.findKeyBindings({ target: input, keystrokes })[0]?.command).toBe(
         command,
       );
   });
 
-  it("forces a pending Text Editor on Shift-click even when previews are disabled", async () => {
-    lumine.config.set("core.allowPendingPaneItems", false);
-    const viewer = jasmine.createSpy("viewer");
-    leases.add(
-      lumine.workspace.addPathOpener({
-        id: "fuzzy-explorer:gesture-viewer",
-        label: "Gesture Viewer",
-        canOpen: (uri) => uri === betaPath,
-        open: viewer,
-      }),
+  for (const ctrlKey of [false, true])
+    it(
+      "uses " + (ctrlKey ? "Ctrl-Shift-click" : "Shift-click") + " only to select the clicked row",
+      async () => {
+        const actions = jasmine.createSpy("finished action");
+        const lease = model.onDidFinishAction(actions);
+        const event = new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          button: 0,
+          shiftKey: true,
+          ctrlKey,
+        });
+        targetRow(items[1]).querySelector(".primary-line").dispatchEvent(event);
+        await flushMicrotasks();
+        lease.dispose();
+        expect(model.getItemId(model.getSelectedItem())).toBe(model.getItemId(items[1]));
+        expect(event.defaultPrevented).toBe(true);
+        expect(actions).not.toHaveBeenCalled();
+        expect(host.isVisible()).toBe(true);
+        expect(lumine.application.openWindow).not.toHaveBeenCalled();
+        expect(open).not.toHaveBeenCalled();
+        expect(external.openExternal).not.toHaveBeenCalled();
+        expect(external.showInFolder).not.toHaveBeenCalled();
+      },
     );
-    const result = await click(items[1], { shiftKey: true });
-    expect(result.status).toBe("success");
-    expect(result.command).toBe("fuzzy-explorer:open-pending");
-    expect(open).toHaveBeenCalledTimes(1);
-    expect(open.calls.mostRecent().args[1].opener).toBe("text-editor");
-    expect(open.calls.mostRecent().args[1].pending).toBe(true);
-    expect(open.calls.mostRecent().args[1].forcePending).toBe(true);
-    const editor = await open.calls.mostRecent().returnValue;
-    expect(editor.getText()).toBe("Beta content\n");
-    expect(lumine.workspace.paneForItem(editor).getPendingItem()).toBe(editor);
-    expect(viewer).not.toHaveBeenCalled();
+
+  it("exposes no Open Pending command or obsolete Enter alias", () => {
+    const input = model.getQueryEditor().getElement();
+    expect(
+      lumine.commands
+        .findCommands({ target: input })
+        .some(({ name }) => name === "fuzzy-explorer:open-pending"),
+    ).toBe(false);
+    for (const keystrokes of ["shift-enter", "ctrl-shift-enter"]) {
+      expect(
+        lumine.keymaps
+          .findKeyBindings({ target: input, keystrokes })
+          .some((binding) => binding.command.startsWith("fuzzy-explorer:")),
+      ).toBe(false);
+    }
   });
+
+  for (const pending of [false, true])
+    it("keeps default file opening governed by the preview setting " + pending, async () => {
+      lumine.config.set("core.allowPendingPaneItems", pending);
+      const result = await click(items[1], {});
+      expect(result.status).toBe("success");
+      expect(result.command).toBe("fuzzy-explorer:open");
+      expect(open).toHaveBeenCalledTimes(1);
+      expect(open.calls.mostRecent().args[1].pending).toBe(pending);
+      expect(open.calls.mostRecent().args[1].opener).toBeUndefined();
+      const editor = await open.calls.mostRecent().returnValue;
+      expect(editor.getText()).toBe("Beta content\n");
+      expect(lumine.workspace.paneForItem(editor).getPendingItem() === editor).toBe(pending);
+    });
 });

@@ -28,7 +28,6 @@ Commands available in `.fuzzy-explorer`:
 - `fuzzy-explorer:open`: open the selected file,
 - `fuzzy-explorer:open-external`: open the file in the default external program,
 - `fuzzy-explorer:open-with`: choose how and where to open the selected file or folder,
-- `fuzzy-explorer:open-pending`: open the file as a temporary text editor tab,
 - `fuzzy-explorer:show-in-folder`: show the file in the system file manager,
 - `fuzzy-explorer:split-left/right/up/down`: open the file in a split pane,
 - `fuzzy-explorer:refresh-index`: rebuild the file index,

@@ -16,6 +16,9 @@
   },
   "license": "MIT",
   "main": "./lib/main",
+  "specPackages": [
+    "open-with"
+  ],
   "files": [
     "keymaps",
     "lib",
