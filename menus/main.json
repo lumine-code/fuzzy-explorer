@@ -26,6 +26,17 @@
           "command": "fuzzy-explorer:toggle",
           "group": "files",
           "order": 20
+        },
+        {
+          "label": "Configuration Files",
+          "submenu": [
+            {
+              "label": "Fuzzy Explorer Paths",
+              "command": "fuzzy-explorer:edit",
+              "group": "packages",
+              "order": 10
+            }
+          ]
         }
       ]
     }
