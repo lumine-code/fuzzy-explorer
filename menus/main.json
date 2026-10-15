@@ -7,11 +7,11 @@
           "label": "Fuzzy Explorer",
           "submenu": [
             {
-              "label": "Toggle",
+              "label": "Browse Files…",
               "command": "fuzzy-explorer:toggle"
             },
             {
-              "label": "Edit",
+              "label": "Edit Search Paths",
               "command": "fuzzy-explorer:edit"
             }
           ]
