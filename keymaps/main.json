@@ -6,7 +6,7 @@
     "alt-e": "fuzzy-explorer:toggle"
   },
   ".fuzzy-explorer lumine-text-editor[mini]": {
-    "alt-enter": "fuzzy-explorer:open-with",
+    "alt-enter": "fuzzy-explorer:choose-opener",
     "ctrl-alt-enter": "fuzzy-explorer:open-external",
     "alt-shift-enter": "fuzzy-explorer:show-in-folder",
     "alt-left": "fuzzy-explorer:split-left",

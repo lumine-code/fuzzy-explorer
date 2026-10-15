@@ -39,10 +39,12 @@ describe("fuzzy-explorer item actions", () => {
     await main.selectList.update({ items: [selectedPath] });
     const actions = main.selectList.getAvailableActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
-    const openWith = byCommand.get("fuzzy-explorer:open-with");
-    expect(openWith.description).toBe("Choose how and where to open the selected file or folder.");
-    expect(openWith.keystrokes).toEqual(["alt-enter"]);
-    expect(openWith.disposition).toBe("push");
+    const chooseOpener = byCommand.get("fuzzy-explorer:choose-opener");
+    expect(chooseOpener.description).toBe(
+      "Choose how and where to open the selected file or folder.",
+    );
+    expect(chooseOpener.keystrokes).toEqual(["alt-enter"]);
+    expect(chooseOpener.disposition).toBe("push");
 
     const openExternal = byCommand.get("fuzzy-explorer:open-external");
     expect(openExternal.name).toBe("Open External");

@@ -7,7 +7,7 @@ Fuzzy search files across user-defined directories.
 - **Fast fuzzy search**: Uses algorithm with smart scoring.
 - **Recently used first**: keeps the entries you acted on at the top of the unfiltered list, ruled off from the rest.
 - **Manual refresh**: Cache updates only when triggered by user.
-- **Opening choices**: choose an opener and destination through Open With, or open a result through the configured external application.
+- **Opening choices**: choose an opener and destination through Launcher, or open a result through the configured external application.
 
 ![Search configured directories for project files.](.github/demo.png)
 
@@ -27,7 +27,7 @@ Commands available in `.fuzzy-explorer`:
 
 - `fuzzy-explorer:open`: open the selected file,
 - `fuzzy-explorer:open-external`: open the file in the default external program,
-- `fuzzy-explorer:open-with`: choose how and where to open the selected file or folder,
+- `fuzzy-explorer:choose-opener`: choose how and where to open the selected file or folder,
 - `fuzzy-explorer:show-in-folder`: show the file in the system file manager,
 - `fuzzy-explorer:split-left/right/up/down`: open the file in a split pane,
 - `fuzzy-explorer:refresh-index`: rebuild the file index,

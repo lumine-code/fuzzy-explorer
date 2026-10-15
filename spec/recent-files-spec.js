@@ -122,7 +122,7 @@ describe("fuzzy-explorer recent files", () => {
   it("opens the chooser for the Alt-clicked entry even without an external service", async () => {
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     const choose = jasmine.createSpy("choose opener");
-    const command = lumine.commands.add("lumine-workspace", "open-with:toggle", choose);
+    const command = lumine.commands.add("lumine-workspace", "launcher:open", choose);
     const selectList = await showList();
     const index = selectList.getDisplayedItems().indexOf("/tmp/gamma.txt");
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
@@ -134,7 +134,7 @@ describe("fuzzy-explorer recent files", () => {
     const result = await action;
     command.dispose();
 
-    expect(result.command).toBe("fuzzy-explorer:open-with");
+    expect(result.command).toBe("fuzzy-explorer:choose-opener");
     expect(choose).toHaveBeenCalledTimes(1);
     expect(choose.calls.mostRecent().args[0].detail.path).toBe("/tmp/gamma.txt");
     expect(open).not.toHaveBeenCalled();

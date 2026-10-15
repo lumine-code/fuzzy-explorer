@@ -88,15 +88,15 @@ describe("fuzzy-explorer standard opening gestures", () => {
   }
 
   function chooser(listener = jasmine.createSpy("choose")) {
-    leases.add(lumine.commands.add("lumine-workspace", "open-with:toggle", listener));
+    leases.add(lumine.commands.add("lumine-workspace", "launcher:open", listener));
     return listener;
   }
 
-  it("Alt-clicks the clicked row into Open With without invoking the ordinary action", async () => {
+  it("Alt-clicks the clicked row into Launcher without invoking the ordinary action", async () => {
     const choose = chooser();
     const result = await click(items[1], { altKey: true });
     expect(result.status).toBe("success");
-    expect(result.command).toBe("fuzzy-explorer:open-with");
+    expect(result.command).toBe("fuzzy-explorer:choose-opener");
     expect(choose).toHaveBeenCalledTimes(1);
     expect(choose.calls.mostRecent().args[0].detail.path).toBe(betaPath);
     expect(choose.calls.mostRecent().args[0].target).toBe(
@@ -121,7 +121,7 @@ describe("fuzzy-explorer standard opening gestures", () => {
     Object.defineProperty(event, "target", { value: model.getQueryEditor().getElement() });
     lumine.keymaps.handleKeyboardEvent(event);
     const result = await finished;
-    expect(result.command).toBe("fuzzy-explorer:open-with");
+    expect(result.command).toBe("fuzzy-explorer:choose-opener");
     expect(choose).toHaveBeenCalledTimes(1);
     expect(choose.calls.mostRecent().args[0].detail.path).toBe(betaPath);
     expect(open).not.toHaveBeenCalled();
@@ -129,7 +129,7 @@ describe("fuzzy-explorer standard opening gestures", () => {
   });
 
   it("keeps the finder's opening pane when another pane becomes active before Alt-click", async () => {
-    const nativeChooser = (await lumine.packages.activatePackage("open-with")).mainModule;
+    const nativeChooser = (await lumine.packages.activatePackage("launcher")).mainModule;
     const openingPane = host.window.getEditorContainer().getActivePane();
     const otherPane = openingPane.splitRight();
     otherPane.activate();
@@ -147,7 +147,7 @@ describe("fuzzy-explorer standard opening gestures", () => {
       expect(lumine.workspace.paneForItem(editor)).toBe(openingPane);
       expect(otherPane.getItems()).toEqual([]);
     } finally {
-      await lumine.packages.deactivatePackage("open-with");
+      await lumine.packages.deactivatePackage("launcher");
       otherPane.destroy();
     }
   });
@@ -203,7 +203,7 @@ describe("fuzzy-explorer standard opening gestures", () => {
   it("resolves the standard opener and system-action keys locally", () => {
     const input = model.getQueryEditor().getElement();
     for (const [keystrokes, command] of [
-      ["alt-enter", "fuzzy-explorer:open-with"],
+      ["alt-enter", "fuzzy-explorer:choose-opener"],
       ["ctrl-alt-enter", "fuzzy-explorer:open-external"],
       ["alt-shift-enter", "fuzzy-explorer:show-in-folder"],
     ])

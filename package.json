@@ -17,7 +17,7 @@
   "license": "MIT",
   "main": "./lib/main",
   "specPackages": [
-    "open-with"
+    "launcher"
   ],
   "files": [
     "keymaps",
