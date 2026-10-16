@@ -71,7 +71,7 @@ describe("fuzzy-explorer recent files", () => {
     await selectList.runAction("fuzzy-explorer:open");
 
     expect(main.recentlyUsed[0]).toBe("/tmp/alpha.txt");
-    expect(main.serialize()).toEqual({ recentlyUsed: main.recentlyUsed });
+    expect(main.workspaceState.get("recentlyUsed", [])).toEqual(main.recentlyUsed);
   });
 
   it("records the entry for every action over it, not only an open", async () => {
@@ -216,12 +216,12 @@ describe("fuzzy-explorer recent files", () => {
     expect(selectList.getElement().querySelector(".select-list-separator")).toBeNull();
   });
 
-  it("restores what it serialized", async () => {
+  it("loads persisted project recents after package reactivation", async () => {
     await main.selectList.recordRecentItem("/tmp/beta.txt");
-    expect(main.serialize()).toEqual({ recentlyUsed: ["/tmp/beta.txt"] });
+    expect(main.workspaceState.get("recentlyUsed", [])).toEqual(["/tmp/beta.txt"]);
 
-    // Deactivation stores what serialize() returned, and the package activates
-    // on its commands, so the round trip needs one dispatched to complete.
+    // Project storage outlives the package generation; dispatching a command
+    // constructs the next generation's lazy list from the stored value.
     await lumine.packages.deactivatePackage("fuzzy-explorer");
     await lumine.packages.startPackage("fuzzy-explorer");
     await lumine.commands.dispatch(workspaceElement, "fuzzy-explorer:toggle");
@@ -229,5 +229,17 @@ describe("fuzzy-explorer recent files", () => {
     pack.mainModule.selectListHost.hide();
 
     expect(pack.mainModule.recentlyUsed).toEqual(["/tmp/beta.txt"]);
+  });
+  it("projects stored history changes into the existing list and persists the next use", async () => {
+    const list = main.selectList;
+    const restored = "/tmp/beta.txt";
+    await main.workspaceState.update("recentlyUsed", [restored]);
+    expect(main.selectList).toBe(list);
+    expect(list.getRecentItemIds()).toEqual([restored]);
+    await list.recordRecentItem("/tmp/alpha.txt");
+    expect(main.workspaceState.get("recentlyUsed", [])).toEqual([
+      list.getItemId("/tmp/alpha.txt"),
+      restored,
+    ]);
   });
 });
