@@ -21,6 +21,39 @@ describe("fuzzy-explorer captured editor availability", () => {
     expect(commands["fuzzy-explorer:copy-relative-path"].isAvailable({})).toBe(false);
     expect(ensure).not.toHaveBeenCalled();
   });
+  it("publishes a shared pending path kind to the surviving picker window", async () => {
+    const fs = require("node:fs");
+    let resolve;
+    spyOn(fs.promises, "lstat").and.returnValue(
+      new Promise((done) => {
+        resolve = done;
+      }),
+    );
+    const firstWindow = {},
+      secondWindow = {};
+    const record = (window) => ({
+      window,
+      host: { isVisible: () => true },
+      model: {
+        getSelectedItem: () => "/shared/folder",
+        update: jasmine.createSpy("refresh cached actions").and.resolveTo(),
+        getElement: () => document.createElement("div"),
+      },
+    });
+    const first = record(firstWindow),
+      second = record(secondWindow);
+    main.windowLists.set(firstWindow, first);
+    main.windowLists.set(secondWindow, second);
+    main.refreshPathKind("/shared/folder", first);
+    main.refreshPathKind("/shared/folder", second);
+    main.windowLists.delete(firstWindow);
+    resolve({ isDirectory: () => true });
+    await flushMicrotasks();
+    expect(main.pathKinds.get("/shared/folder")).toBe(true);
+    expect(second.model.update).toHaveBeenCalledOnceWith({});
+    main.windowLists.delete(secondWindow);
+  });
+
   it("uses cached directory metadata in action predicates", () => {
     main.pathKinds.set("/cached/folder", true);
     const fs = require("node:fs"),
