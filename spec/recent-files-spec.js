@@ -242,4 +242,24 @@ describe("fuzzy-explorer recent files", () => {
       restored,
     ]);
   });
+  it("keeps concurrent records from two window lists and honours removal and clear", async () => {
+    const extra = await lumine.workspace.openEditorWindow({ show: false });
+    try {
+      const local = main.selectList;
+      const remote = main.ensureSelectList(extra).getModel();
+      const first = "/tmp/alpha.txt";
+      const second = "/tmp/beta.txt";
+      const ids = [local.getItemId(second), local.getItemId(first)];
+      await Promise.all([local.recordRecentItem(first), remote.recordRecentItem(second)]);
+      expect(main.workspaceState.get("recentlyUsed")).toEqual(ids);
+      expect(local.getRecentItemIds()).toEqual(ids);
+      expect(remote.getRecentItemIds()).toEqual(ids);
+      await local.removeRecentItem(ids[1]);
+      expect(main.workspaceState.get("recentlyUsed")).toEqual([ids[0]]);
+      await remote.clearRecentItems();
+      expect(main.workspaceState.get("recentlyUsed")).toEqual([]);
+    } finally {
+      await lumine.workspace.closeEditorWindow(extra);
+    }
+  });
 });
