@@ -52,7 +52,7 @@ describe("fuzzy-explorer standard opening gestures", () => {
       relative.startsWith(".." + path.sep)
     )
       throw new Error("Gesture fixture escaped the private temporary directory");
-    fs.rmSync(scratch, { recursive: true, force: true, maxRetries: 10, retryDelay: 50 });
+    await fs.promises.rm(scratch, { recursive: true, force: true, maxRetries: 10, retryDelay: 50 });
   });
 
   function targetRow(item) {
