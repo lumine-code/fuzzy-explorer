@@ -1,9 +1,9 @@
 {
   "title": "fuzzy-explorer",
   "description": "Search configured directories for project files.",
-  "recordedOn": "2026-10-14",
-  "sourceRevision": "32241b42cbc1e5a6fa4ac7c47d5f323f61223880",
-  "themeSourceRevision": "a673daf5882dc988419316d144a9bbe0aec9cb53",
+  "recordedOn": "2026-10-18",
+  "sourceRevision": "1fb25570c035d5419064a740a0e0a18814c63284",
+  "themeSourceRevision": "45b22049e87256e9327beb0b350e67fe81d7fc81",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
@@ -11,8 +11,8 @@
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.1",
-    "chrome": "152.0.7977.149",
+    "electron": "44.9.0",
+    "chrome": "152.0.7977.167",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -24,34 +24,34 @@
   "privacy": { "version": 1, "location": "neutral", "textChecked": true },
   "sources": {
     "editor": {
-      "revision": "b3fcd05714f72e3aa88498c47334a04de2c51afa",
-      "dirty": true,
-      "workingTreeHash": "b83140dc0b2863be081113231aec9ccbed9525566ea48dc135cdd3c725bd1985"
+      "revision": "10950c83cb6d964aadbcf4036af67c6484c1341d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "package": {
-      "revision": "32241b42cbc1e5a6fa4ac7c47d5f323f61223880",
-      "dirty": true,
-      "workingTreeHash": "e06354f226961170520bc191010f45bc69426704f14a385355239d06ab8ff306"
+      "revision": "1fb25570c035d5419064a740a0e0a18814c63284",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "fuzzy-explorer": {
-      "revision": "32241b42cbc1e5a6fa4ac7c47d5f323f61223880",
-      "dirty": true,
-      "workingTreeHash": "e06354f226961170520bc191010f45bc69426704f14a385355239d06ab8ff306"
+      "revision": "1fb25570c035d5419064a740a0e0a18814c63284",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "language-javascript": {
-      "revision": "7c60e9b041c23a0426c11a3e939883f8198cf528",
-      "dirty": true,
-      "workingTreeHash": "544bcf00c948e5f32c1e3dbd8b7ef76bcc72d20a7d0070c62fc4adb139e96459"
+      "revision": "721d40ef20e4ffda4125b375f50c908541fa7c08",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "one-theme": {
-      "revision": "a673daf5882dc988419316d144a9bbe0aec9cb53",
-      "dirty": true,
-      "workingTreeHash": "e06354f226961170520bc191010f45bc69426704f14a385355239d06ab8ff306"
+      "revision": "45b22049e87256e9327beb0b350e67fe81d7fc81",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "tree-view": {
-      "revision": "aaa932b9f685f7514a5015d3b54079c45057475d",
-      "dirty": true,
-      "workingTreeHash": "e06354f226961170520bc191010f45bc69426704f14a385355239d06ab8ff306"
+      "revision": "c1781b2f9680b1079e9c583431aed03e5b0992a3",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
   },
   "fixtures": [
@@ -82,7 +82,7 @@
       "label": "Search configured directories for project files.",
       "width": 1200,
       "height": 760,
-      "sha256": "da2bdd9a181883b834e876a900104fba6d55bb4972be99de68bd5cd3e647160e"
+      "sha256": "a29b27baba03ae51f65bcb3a6d26d4d212b60d1caca595db13ebddd3298145ab"
     }
   ]
 }
