@@ -22,11 +22,21 @@
       "label": "File",
       "submenu": [
         {
-          "label": "Browse Files…",
-          "command": "fuzzy-explorer:toggle",
-          "group": "files",
-          "order": 20
-        },
+          "label": "Browse",
+          "submenu": [
+            {
+              "label": "Configured Files…",
+              "command": "fuzzy-explorer:toggle",
+              "group": "sources",
+              "order": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "App",
+      "submenu": [
         {
           "label": "Configuration Files",
           "submenu": [
