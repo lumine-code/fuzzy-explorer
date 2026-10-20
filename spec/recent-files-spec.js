@@ -77,8 +77,7 @@ describe("fuzzy-explorer recent files", () => {
     await main.selectList.recordRecentItem("/tmp/beta.txt");
     const selectList = await showList();
 
-    selectList.getQueryEditor().setText("alpha");
-    await lumine.views.getNextUpdatePromise();
+    await selectList.setQuery("alpha");
 
     expect(selectList.getElement().querySelector(".select-list-separator")).toBeNull();
   });
